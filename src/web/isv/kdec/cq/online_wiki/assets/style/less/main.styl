@@ -1,0 +1,641 @@
+.customright {
+  width calc(100% - 229px)
+  min-width 1011px
+  min-height 493px
+  height 100%
+  background #fff
+  display inline-block
+  margin-left 20px
+  vertical-align top
+  -border 1px solid rgba(219, 219, 219, 1)
+  box-shadow 0px 2px 6px 0px rgba(0, 0, 0, 0.15)
+  box-sizing border-box
+  position relative
+  .child-view {
+    width 100%
+    height 100%
+    overflow-y auto
+    .approtitle {
+      padding 0 35px 0 25px
+      min-height 50px
+      background rgba(238, 241, 246, 1)
+      line-height 50px
+      font-size 0
+      font-weight bold
+      color rgba(31, 45, 61, 1)
+      overflow hidden
+      z-index 4
+      width calc(100% - 60px)
+      transition height ease 0.3s
+      &.fbshow {
+        height auto
+      }
+      .infotitle {
+        height 50px
+        background rgba(238, 241, 246, 1)
+        line-height 50px
+        font-size 23px
+        font-weight normal
+        color rgba(51, 51, 51, 1)
+      }
+      .devappro {
+        width 77px
+        height 32px
+        background rgba(105, 140, 241, 1)
+        border-radius 4px
+        margin-top 10px
+        font-size 16px
+        font-weight 400
+        color rgba(255, 255, 255, 1)
+        line-height 32px
+        text-align center
+        display inline-block
+        cursor pointer
+        vertical-align top
+        &.btnloading {
+          opacity 0.5
+        }
+      }
+      .marginsomeleft {
+        margin-left 10px
+      }
+      .filterbox {
+        display inline-block
+        margin-left 10px
+        -height 37px
+        -max-width 260px
+        vertical-align top
+        -overflow-y auto
+        &:hover {
+          height auto
+        }
+        .filtername {
+          font-size 12px
+          line-height 50px
+          font-weight normal
+        }
+        .fbselect {
+          display inline-block
+          .el-select {
+            .el-input {
+              .el-input__inner {
+                width 97px
+                height 34px
+                line-height 34px
+              }
+            }
+            &.diffwidth {
+              .el-input {
+                .el-input__inner {
+                  width 105px
+                }
+              }
+            }
+          }
+        }
+      }
+      .searchfc {
+        cursor pointer
+        border 1px solid #ccc
+        border-radius 2px
+        font-size 12px
+        color #666
+        letter-spacing 0
+        margin 13px 6px 4px 10px
+        height 24px
+        display inline-block
+        line-height 24px
+        padding 0 30px 0 10px
+        font-weight normal
+        position relative
+        vertical-align top
+        i {
+          width 24px
+          height 24px
+          text-align center
+          display inline-block
+          font-size 16px
+          line-height 24px
+          position absolute
+          right 0
+          top 0
+        }
+        &:hover {
+          border-color #698cf1
+          i {
+            background-color #698cf1
+            color #fff
+          }
+        }
+      }
+      .searchdevb {
+        -width 480px
+        -width 190px
+        height 40px
+        padding-top 8px
+        float right
+        .searchinput {
+          width 341px
+          height 32px
+          float left
+          background #fff
+          border-radius 4px 0px 0px 4px
+          .el-input {
+            height 32px
+            vertical-align top
+            input {
+              width 341px
+              height 32px
+              border none
+              font-size 16px
+              color #0B1A2A
+              vertical-align top
+            }
+            .el-input__prefix {
+              height 32px
+              .el-input__icon {
+                font-size 18px
+                line-height 32px
+                height 32px
+                vertical-align top
+              }
+            }
+          }
+        }
+        .searchinput2 {
+          width 190px
+          height 32px
+          float right
+          border-radius 0
+          transition width ease 0.3s
+          border-bottom 1px solid rgba(199, 203, 211, 1)
+          position relative
+          &.focus {
+            width 330px
+          }
+          &:hover {
+            border-bottom-color #698cf1
+            .el-input {
+              .el-input__prefix {
+                .el-input__icon {
+                  color #698cf1
+                }
+              }
+            }
+          }
+          .el-input {
+            height 34px
+            vertical-align top
+            input {
+              width 100%
+              height 34px
+              border none
+              font-size 12px
+              border-radius 0
+              background transparent
+              color #0B1A2A
+              vertical-align top
+            }
+            .el-input__prefix {
+              height 34px
+              .el-input__icon {
+                font-size 16px
+                line-height 32px
+                height 32px
+                vertical-align top
+              }
+            }
+            .el-input__suffix {
+              height 34px
+              i {
+                vertical-align top
+              }
+            }
+          }
+          .sousuodiv {
+            width 100%
+            background pink
+            position absolute
+            top 32px
+            left 0
+            >div {
+              height 24px
+              font-size 14px
+              font-weight 400
+              line-height 24px
+              padding-left 15px
+            }
+          }
+        }
+        .searchbtn {
+          width 77px
+          height 32px
+          cursor pointer
+          float right
+          background #698CF1
+          border-radius 0px 4px 4px 0px
+          text-align center
+          line-height 32px
+          font-size 16px
+          color #FFFFFF
+        }
+        .showfilterbox {
+          margin 0 0 0 10px
+          height 32px
+          float right
+          font-size 14px
+          color rgb(31, 45, 61)
+          line-height 32px
+          font-weight normal
+          cursor pointer
+          padding 0 10px 16px 10px
+          border-radius 4px 4px 0 0
+          -border 1px solid transparent
+          background-color transparent
+          &.fbshow {
+            background #fff
+            -border-color #dbe5fc
+            -border-bottom none
+            -border-left none
+            color #5e80eb
+            position relative
+            // &:after {
+            // content ''
+            // width 100%
+            // height 110px
+            // background #fff
+            // position absolute
+            // bottom -90px
+            // right 0
+            // }
+          }
+          i {
+            margin-left 2px
+            transition transform ease 0.3s
+            &.active {
+              transform rotate(180deg)
+              color #5e80eb
+            }
+          }
+        }
+      }
+      .tablefilterbox {
+        border-radius 4px 0 4px 4px
+        padding 0 75px 0 20px
+        margin 0 0 0 10px
+        height 0
+        background #fff
+        box-sizing border-box
+        overflow hidden
+        transition height ease 0.3s
+        width calc(100% - 10px)
+        &.fbshow {
+          -height 112px
+          -border 1px solid #dbe5fc
+          margin 0 0 10px 10px
+        }
+        .fbcondition {
+          >div {
+            width 100%
+            min-height 36px
+            >ul {
+              &:after {
+                content ''
+                width 0
+                height 0
+                display block
+                visibility hidden
+                overflow hidden
+                clear both
+              }
+              >li {
+                float left
+                cursor pointer
+                font-size 14px
+                color #888
+                margin 5px 8px
+                line-height 24px
+                font-weight normal
+                padding 0px 10px
+                border 1px solid transparent
+                &.active {
+                  border-color #666
+                }
+                &:hover {
+                  border-color #666
+                }
+                &:first-child {
+                  width 70px
+                  cursor auto
+                  color #999
+                  border none
+                }
+              }
+            }
+          }
+          .fbtime {
+            height 36px
+            .tesuul {
+              &:after {
+                content none
+              }
+            }
+            .tiesecadate {
+              height 27px
+              margin-left 17px
+              &.is-active {
+                &:hover {
+                  border-color #698cf1
+                }
+              }
+              .el-range__icon, .el-range__close-icon {
+                line-height 22px
+              }
+              .el-range-separator {
+                line-height 22px
+                color #ccc
+              }
+            }
+            .comftime {
+              display inline-block
+              width 50px
+              height 26px
+              font-size 12px
+              text-align center
+              line-height 26px
+              background #698cf1
+              color #fff
+              vertical-align top
+              margin-top 5px
+              margin-left 6px
+              cursor pointer
+            }
+          }
+          .fbcase {
+            border-top 1px solid #dbe5fc
+          }
+        }
+      }
+    }
+    .approcontent {
+      padding 26px 39px 0 35px
+      -margin-top 50px
+      height calc(100% - 100px)
+      transition all ease 0.3s
+      // &.fbshow {
+      // padding-top 136px
+      // height calc(100% - 210px)
+      // }
+      .el-table {
+        overflow unset
+        height 100%
+        &:before {
+          height 0
+        }
+        .el-table__header-wrapper, .el-table__fixed-header-wrapper, .el-table__fixed-body-wrapper {
+          tr {
+            th {
+              color #333
+              padding 0
+              background rgba(245, 245, 245, 1)
+              height 34px
+              &.el-table-column--selection {
+                padding 0
+              }
+              .cell {
+                border-left 1px solid rgba(199, 203, 211, 1)
+                .caret-wrapper {
+                  height 21px
+                  .sort-caret.ascending {
+                    top -2px
+                  }
+                  .sort-caret.descending {
+                    bottom 0px
+                  }
+                }
+              }
+              &:first-child {
+                .cell {
+                  border-left none
+                  display none
+                }
+              }
+            }
+            .el-checkbox__input {
+              &.is-checked {
+                .el-checkbox__inner {
+                  background-color #698cf1
+                  border-color #698cf1
+                }
+              }
+              &.is-indeterminate {
+                .el-checkbox__inner {
+                  background-color #698cf1
+                  border-color #698cf1
+                }
+              }
+              .el-checkbox__inner {
+                border-radius 50%
+                width 16px
+                height 16px
+                &:after {
+                  left 5px
+                  top 2px
+                }
+                &:hover {
+                  border-color #698cf1
+                }
+              }
+            }
+          }
+        }
+        .el-table__body-wrapper {
+          height calc(100% - 47px)
+          overflow-y auto
+          tr {
+            .el-checkbox__input {
+              &.is-checked {
+                .el-checkbox__inner {
+                  background-color #698cf1
+                  border-color #698cf1
+                }
+              }
+              .el-checkbox__inner {
+                border-radius 50%
+                width 16px
+                height 16px
+                &:after {
+                  left 5px
+                  top 2px
+                }
+                &:hover {
+                  border-color #698cf1
+                }
+              }
+            }
+            .cell {
+              .bottomline {
+                color blue
+                text-decoration underline
+                cursor pointer
+              }
+              .highMarked {
+                padding 5px 15px
+                color #fff
+                border-radius 5px
+                display inline-block
+              }
+              .wordbreak {
+                display inline-block
+                max-height 90px
+                overflow hidden
+                text-overflow ellipsis
+                display -webkit-box
+                -webkit-line-clamp 3
+                -webkit-box-orient vertical
+                &.multi {
+                  -webkit-line-clamp 6
+                  max-height none
+                }
+              }
+              .nowrapcss {
+                white-space nowrap
+                overflow hidden
+                text-overflow ellipsis
+                display block
+              }
+              .tableimg {
+                width 60px
+                height 60px
+                border-radius 4px
+              }
+              .avatarimg {
+                width 60px
+                height 60px
+                border-radius 50%
+              }
+              .el-button:focus, .el-button:hover {
+                color #649df9
+                border-color #649df9
+                background-color #fff
+              }
+            }
+            .handleadbtn {
+              &:active, &:hover, &:focus {
+                color #698cf1
+                border-color #698cf1
+                background-color #c9d7ff
+              }
+            }
+            .operateVal {
+              width 70px
+              height 30px
+              outline none
+              border none
+              border 1px solid #EBEEF5
+              border-radius 4px
+              color #666
+            }
+            .operatbox {
+              width 70px
+              margin 0 auto
+              .operatarea {
+                width 70px
+                height 30px
+                outline none
+                border none
+                border 1px solid #EBEEF5
+                border-radius 4px
+                color #666
+                margin 0 auto
+              }
+              .operatul {
+                display none
+                position absolute
+                z-index 100
+                border 1px solid #EBEEF5
+                border-top none
+                border-radius 5px
+                &:hover {
+                  display block
+                }
+                .operatli {
+                  width 68px
+                  height 30px
+                  background #fff
+                  border-top 1px solid #EBEEF5
+                  cursor pointer
+                  &:first-child {
+                    border-top none
+                  }
+                }
+              }
+              &:hover {
+                .operatul {
+                  display block
+                }
+              }
+            }
+          }
+          .el-table__body {
+            tbody {
+              .el-table__row {
+                &:last-child {
+                  .cell {
+                    .operatbox {
+                      .operatul {
+                        bottom 49px
+                        .operatli {
+                          &:first-child {
+                            border-top 1px solid #EBEEF5
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .paging {
+        position absolute
+        bottom -45px
+        right 0
+      }
+      .el-table td, .el-table th {
+        text-align center
+      }
+      .el-table td {
+        color #666666
+      }
+    }
+  }
+  .customfullslogan {
+    width 100%
+    height 100%
+    background #fff
+    position relative
+    text-align center
+    line-height 100%
+    i {
+      font-size 60px
+      line-height 100%
+      position absolute
+      left 50%
+      top 50%
+      margin-left -30px
+      margin-top -30px
+    }
+    &:after {
+      content ''
+      width 0
+      height 0
+      display block
+      clear both
+      overflow hidden
+      visibility hidden
+    }
+  }
+}
