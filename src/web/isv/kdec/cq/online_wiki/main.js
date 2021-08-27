@@ -2,7 +2,9 @@
 import Vue from 'vue'
 import store from './vuex/store'
 import Main from './views/Main.vue'
+import { mavonEditor } from "mavon-editor";
 
+Vue.component("mavon-editor", mavonEditor);
 
 import {
     Select,

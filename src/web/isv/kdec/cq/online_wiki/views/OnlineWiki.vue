@@ -4,7 +4,7 @@
       <div class="leftchange">
         <span>文档管理</span>
         <el-select v-model="docListPoint"
-                   @change="showchange"
+                   @change="showChange"
                    placeholder="请选择需要显示的文档类型">
           <el-option v-for="item in options"
                      :key="item.value"
@@ -340,11 +340,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'openInfo'
+      'openInfo',
+        'itemList',
+        'addressList'
     ])
   },
   methods: {
     ...mapActions([
+        'addressListGet',
       'docMenuItemAdminGet',
       'docMenuItemAdd',
       'docMenuItemPut',
@@ -358,89 +361,14 @@ export default {
       'docMenuItemAvatar'
     ]),
     init () {
-      this.docMenuItemAdminGet({}).then(res => {
-        this.jsonloop = [{
-          'id': null,
-          'root': true,
-          'name': '全部',
-          'docId': null,
-          'status': 0,
-          'childMenus': res.data
-        }]
-        this.alljsonloop = [{
-          'id': null,
-          'root': true,
-          'name': '全部',
-          'docId': null,
-          'status': 0,
-          'childMenus': res.data
-        }]
-
-        this.jsonloop[0].childMenus.forEach(m => {
-          this.idArr.push(m.id)
-        })
-
-        this.docListPoint = 'develop'
-        this.options = [{
-          value: 'develop',
-          label: '开发指南'
-        }, {
-          value: 'greenStart',
-          label: '新手入门'
-        }, {
-          value: 'apiCenter',
-          label: '接口文档'
-        }, {
-          value: 'design',
-          label: '应用指南'
-        }, {
-          value: 'research',
-          label: '研发管理'
-        }, {
-          value: 'manage',
-          label: '管理员'
-        }]
-
-        this.showchange(this.docListPoint)
-
-        // 如果有定位
-        this.$nextTick(() => {
-          if (this.$route.query.id) {
-            this.filterText = this.$route.query.id
-          }
-        })
-      }).catch(res => {
-        this.$store.dispatch('VerifiFailure', res)
-      })
+      this.addressListGet({})
+      //this.docListPoint = 'develop'
+      // this.showChange(this.docListPoint)
     },
-    showchange (type) {
+    showChange (type) {
       this.reset()
-      this.docMenuItemAdminGet({}).then(res => {
-        this.jsonloop = [{
-          'id': null,
-          'root': true,
-          'name': '全部',
-          'docId': null,
-          'status': 0,
-          'childMenus': res.data
-        }]
-        this.alljsonloop = [{
-          'id': null,
-          'root': true,
-          'name': '全部',
-          'docId': null,
-          'status': 0,
-          'childMenus': res.data
-        }]
-
-        this.jsonloop[0].childMenus = this.alljsonloop[0].childMenus.filter(item => {
-          if (!type || type === 'develop') {
-            return item.address === 'develop' || item.address == null
-          }
-          return item.address === type
-        })
-      }).catch(res => {
-        this.$store.dispatch('VerifiFailure', res)
+      this.docMenuItemAdminGet({
+        "address":type
       })
     },
     showchange2 (type) {
@@ -652,32 +580,6 @@ export default {
         }
       }
     },
-    // treedelete () {
-    //   if (JSON.stringify(this.checkloop.data) === '{}') {
-    //     this.openInfo.huidiao = true
-    //     this.openInfo.huidiaoInfo = '请选中一个节点'
-    //     return
-    //   }
-    //   if (!this.checkloop.data.id) {
-    //     this.remove(this.checkloop.node, this.checkloop.data)
-    //     this.reset()
-    //     return
-    //   }
-    //   this.$confirm('此操作将删除节点, 是否继续?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning',
-    //     customClass: 'outerbtn'
-    //   }).then(() => {
-    //     this.docMenuItemDelete({ 'id': this.checkloop.data.id }).then(res => {
-    //       this.checkloop.data.status = res.data.status
-    //       // this.remove(this.checkloop.node, this.checkloop.data)
-    //       // this.reset()
-    //     }).catch(res => {
-    //       this.$store.dispatch('VerifiFailure', res)
-    //     })
-    //   }).catch(() => { })
-    // },
     treeedit () {
       if (this.checkloop.data.name === '') {
         this.openInfo.huidiao = true
@@ -912,6 +814,35 @@ export default {
   watch: {
     filterText (val) {
       this.$refs.tree2.filter(val)
+    },
+    itemList (val) {
+      this.jsonloop = [{
+        'id': null,
+        'root': true,
+        'name': '全部',
+        'docId': null,
+        'status': 0,
+        'childMenus': val
+      }]
+      this.alljsonloop = [{
+        'id': null,
+        'root': true,
+        'name': '全部',
+        'docId': null,
+        'status': 0,
+        'childMenus': val
+      }]
+      // 一级目录数据  默认打开一级目录的数据
+      this.jsonloop[0].childMenus.forEach(m => {
+        this.idArr.push(m.id)
+      })
+    },
+    addressList (val) {
+      this.options = val
+      if (val[0]){
+        this.docListPoint = val[0].label
+        this.showChange(val[0].value)
+      }
     }
   }
 }

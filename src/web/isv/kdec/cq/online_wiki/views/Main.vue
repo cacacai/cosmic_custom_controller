@@ -12,3 +12,6 @@ export default {
   }
 }
 </script>
+<style>
+@import "https://unpkg.com/element-ui/lib/theme-chalk/index.css";
+</style>

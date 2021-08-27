@@ -13,8 +13,10 @@
     "axios": "^0.21.1",
     "element-ui": "^2.15.5",
     "less": "^3.11.1",
+    "mavon-editor": "^2.9.1",
     "postal": "^2.0.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.5.2"
   },
   "devDependencies": {
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
@@ -32,6 +34,7 @@
     "css-loader": "^3.5.3",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^6.2.0",
     "filemanager-webpack-plugin": "^2.0.5",
     "glob": "^7.1.6",
     "less-loader": "^6.0.0",

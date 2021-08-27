@@ -20,10 +20,23 @@ export default new  Vuex.Store({
       huidiaoInfo3: '',
       huidiao4: false,
       huidiaoInfo4: ''
-    }
+    },
+      list: null,
+      addressList: null
   },
   mutations: {
     UPDATE_ALL_DATA (state, props) {
+        const data = props.data
+        if (data && data.eventName){
+            switch (data.eventName) {
+                case 'list':
+                    state.list= data.data
+                    break
+                case 'addressList':
+                    state.addressList = data.data
+            }
+
+        }
         // TODO  接收后台数据接口
       //console.log('change Data, ', props)
       //state.ganttData = Object.assign([], props.data)
@@ -36,9 +49,20 @@ export default new  Vuex.Store({
   getters: {
     openInfo: (state) => {
         return state.openInfo
-    }
+    },
+      itemList: (state) => {
+        return state.list
+      },
+      addressList: (state) => {
+        return state.addressList
+      },
   },
   actions: {
+      addressListGet:({ // 获取所有文档列表
+                       rootState
+                   }, obj) => {
+          return rootState.invoke('addressList', obj)
+      },
     docMenuItemAdminGet: ({ // 获取所有文档列表
                             rootState
                           }, obj) => {

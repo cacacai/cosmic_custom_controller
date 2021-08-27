@@ -116,3 +116,6 @@ export default {
   }
 }
 </script>
+<style>
+@import "https://unpkg.com/mavon-editor/dist/css/index.css";
+</style>
