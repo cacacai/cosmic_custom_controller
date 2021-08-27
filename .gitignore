@@ -1,0 +1,13 @@
+node_modules
+.idea
+.vscode
+yarn.lock
+package-lock.json
+.DS_Store
+
+# index为自动生成的js/css文件。
+index.css
+index.js
+
+index.css.map
+index.js.map

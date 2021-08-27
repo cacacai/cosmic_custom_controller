@@ -1,0 +1,294 @@
+.managetreelook {
+  .leftchange {
+    display inline-block
+    >span {
+      vertical-align middle
+    }
+    .el-select {
+      .el-input {
+        .el-input__inner {
+          height 34px
+        }
+      }
+    }
+  }
+  .infotitle {
+    padding-left 35px
+    height 50px
+    background rgba(238, 241, 246, 1)
+    line-height 50px
+    font-size 23px
+    font-weight normal
+    color rgba(51, 51, 51, 1)
+    .searchdevb {
+      height 40px
+      padding 6px 39px 0 0
+      float right
+      .searchinput2 {
+        width 190px
+        height 32px
+        float left
+        border-radius 0
+        transition width ease 0.3s
+        border-bottom 1px solid rgba(199, 203, 211, 1)
+        position relative
+        &.focus {
+          width 330px
+        }
+        &:hover {
+          border-bottom-color #698cf1
+          .el-input {
+            .el-input__prefix {
+              .el-input__icon {
+                color #698cf1
+              }
+            }
+          }
+        }
+        .el-input {
+          height 34px
+          vertical-align top
+          input {
+            width 100%
+            height 34px
+            border none
+            font-size 12px
+            border-radius 0
+            background transparent
+            color #0B1A2A
+            vertical-align top
+          }
+          .el-input__prefix {
+            height 34px
+            .el-input__icon {
+              font-size 16px
+              line-height 32px
+              height 32px
+              vertical-align top
+            }
+          }
+          .el-input__suffix {
+            height 34px
+            i {
+              vertical-align top
+            }
+          }
+        }
+        .sousuodiv {
+          width 100%
+          background pink
+          position absolute
+          top 32px
+          left 0
+          >div {
+            height 24px
+            font-size 14px
+            font-weight 400
+            line-height 24px
+            padding-left 15px
+          }
+        }
+      }
+      .devappro {
+        width 115px
+        height 32px
+        background rgba(105, 140, 241, 1)
+        border-radius 4px
+        margin 2px 0 0 20px
+        font-size 16px
+        font-weight 400
+        color rgba(255, 255, 255, 1)
+        line-height 32px
+        text-align center
+        display inline-block
+        cursor pointer
+        float left
+        >a {
+          width 100%
+          height 100%
+          display inline-block
+        }
+        &.maneditbtn {
+          width 77px
+        }
+      }
+    }
+  }
+  .infocontent {
+    padding 26px 39px 0 35px
+    height calc(100% - 100px)
+    .treebox {
+      width 100%
+      height 100%
+      .treeleft {
+        width 450px
+        height 100%
+        margin-right 2px
+        float left
+        overflow-y auto
+        .treefilter {
+          height 40px
+          .el-input__inner {
+            border-radius 0
+            background #fff
+          }
+        }
+        .showdma {
+          width 100%
+          height 30px
+          background #fff
+          .el-switch {
+            &.is-checked {
+              .el-switch__core {
+                border-color #698cf1
+                background-color #698cf1
+              }
+            }
+            margin-top 5px
+            padding-left 15px
+            .el-switch__label {
+              &.is-active {
+                color #698cf1
+              }
+            }
+          }
+        }
+        .el-tree {
+          width 100%
+          -height calc(100% - 40px)
+          -overflow-y auto
+          .custom-tree-node {
+            flex 1
+            display flex
+            align-items center
+            justify-content space-between
+            font-size 14px
+            padding-right 8px
+            &.disableclass {
+              .customspan {
+                color #ccc
+              }
+            }
+            &.deleteclass {
+              .customspan {
+                text-decoration line-through
+                color #ccc
+                font-style italic
+              }
+            }
+          }
+        }
+      }
+      .treeright {
+        background #fff
+        height 100%
+        width 450px
+        overflow-y auto
+        float left
+        .curinfor {
+          padding 10px 20px
+          font-size 14px
+          line-height 28px
+          color #606266
+          .titcur {
+            text-align center
+            font-size 16px
+            a {
+              color blue
+              font-size 14px
+            }
+            .tcur_p {
+              font-size 12px
+            }
+          }
+          .lookmark {
+            width 100%
+            height 40px
+            border-radius 6px
+            text-align center
+            margin-top 20px
+            background #649df9
+            background-image linear-gradient(45deg, #5a79ee 0%, #649df9 100%)
+            a {
+              color #fff
+            }
+            &.noback {
+              background none
+              a {
+                color #606266
+              }
+            }
+          }
+          .curbtn {
+            display flex
+            justify-content space-around
+            >div {
+              width 136px
+              height 35px
+              border-radius 100px
+              text-align center
+              margin-top 20px
+              a {
+                font-size 14px
+                color #fff
+                letter-spacing 0
+                line-height 35px
+                display block
+              }
+            }
+            .deletebtn {
+              border 1px solid red
+              a {
+                color red
+              }
+            }
+            .confirmbtn {
+              background #649df9
+              background-image linear-gradient(45deg, #5a79ee 0%, #649df9 100%)
+              box-shadow 0 2px 10px 0 rgba(92, 128, 241, 0.69)
+            }
+          }
+          .nodedial {
+            margin-top 30px
+          }
+          .avatar-uploader {
+            display inline-block
+            &:after {
+              content ''
+              width 0
+              height 0
+              display block
+              overflow hidden
+              visibility hidden
+              clear both
+            }
+            .el-upload {
+              border 1px dashed #d9d9d9
+              border-radius 6px
+              cursor pointer
+              position relative
+              overflow hidden
+              &:hover {
+                border-color #409EFF
+              }
+            }
+            .avatar-uploader-icon {
+              font-size 28px
+              color #8c939d
+              width 36px
+              height 36px
+              line-height 36px
+              text-align center
+              margin auto
+            }
+            .avatar {
+              width 36px
+              height 36px
+              display block
+            }
+          }
+        }
+      }
+    }
+  }
+}
