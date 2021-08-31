@@ -31,7 +31,7 @@
              v-if="!iframeClick"
              @click="editdialog = !editdialog">移动</div>
 
-        <div class="devappro"
+<!--        <div class="devappro"
              v-show="docListPoint !== 'greenStart' && docListPoint !== 'manage' ">
           <a v-if="docListPoint === 'develop'"
              href="/index/docshome/developNew?type=develop"
@@ -48,25 +48,14 @@
           <a v-if="docListPoint === 'research'"
              href="/index/docshome/developNew?type=research"
              target="_blank">预览研发管理</a>
-        </div>
+        </div>-->
       </div>
     </div>
 
     <div class="infocontent">
 
       <div class="treebox">
-        <div class="treeleft">
-          <!-- <el-input class="treefilter"
-                    placeholder="输入关键字进行过滤"
-                    :clearable="true"
-                    v-model="filterText">
-          </el-input> -->
-          <!-- <div class="showdma">
-          <el-switch v-model="showdelete"
-                     active-text="显示删除节点"
-                     inactive-text="隐藏删除节点">
-          </el-switch>
-        </div> -->
+        <div class="treeleft" v-loading="treeLoading">
           <el-tree :data="jsonloop"
                    :props="defaultProps"
                    node-key="id"
@@ -95,11 +84,11 @@
                  target="_blank">点击预览</a>
             </div>
             <div>节点id：<el-input type="text"
-                        disabled="disabled"
-                        v-model="checkloop.data.id"></el-input>
+                                disabled="disabled"
+                                v-model="checkloop.data.id"></el-input>
             </div>
             <div>节点名称：<el-input type="text"
-                        v-model="checkloop.data.name"></el-input>
+                                v-model="checkloop.data.name"></el-input>
             </div>
             <!-- <div>节点路径：<el-input type="text"
                       v-model="checkloop.data.address"></el-input>
@@ -209,7 +198,7 @@
             </div>
 
             <div v-show="checkloop.data.id && checkloop.data.type === 1">外链地址：<el-input type="text"
-                        v-model="checkloop.data.link"></el-input>
+                                                                                        v-model="checkloop.data.link"></el-input>
             </div>
 
             <el-button type="button"
@@ -237,10 +226,10 @@
                 <p class="tcur_p">需在操作后保存一下移动的所有叶子节点，拖拽移动一个没有子节点的除外</p>
               </div>
               <div>请输入节点id：<el-input type="text"
-                          v-model="editNode.id"></el-input>
+                                     v-model="editNode.id"></el-input>
               </div>
               <div>请输入父节点id：<el-input type="text"
-                          v-model="editNode.parentId"></el-input>
+                                      v-model="editNode.parentId"></el-input>
               </div>
               <div class="curbtn">
                 <div class="confirmbtn"
@@ -298,6 +287,7 @@ export default {
   },
   data () {
     return {
+      treeLoading: false,
       inputfocusflag: false,
       jsonloop: null, // 部分值
       alljsonloop: null, // 全部保留所有值
@@ -336,18 +326,19 @@ export default {
   },
   props: ['iframeClick'],
   mounted () {
+    this.treeLoading = true
     this.init()
   },
   computed: {
     ...mapGetters([
       'openInfo',
-        'itemList',
-        'addressList'
+      'itemList',
+      'addressList'
     ])
   },
   methods: {
     ...mapActions([
-        'addressListGet',
+      'addressListGet',
       'docMenuItemAdminGet',
       'docMenuItemAdd',
       'docMenuItemPut',
@@ -836,6 +827,7 @@ export default {
       this.jsonloop[0].childMenus.forEach(m => {
         this.idArr.push(m.id)
       })
+      this.treeLoading = false //结束加载数据
     },
     addressList (val) {
       this.options = val

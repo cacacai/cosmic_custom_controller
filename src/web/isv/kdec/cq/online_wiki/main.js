@@ -15,7 +15,8 @@ import {
     RadioGroup,
     Upload,
     Button,
-    Dialog
+    Dialog,
+    Loading
 } from 'element-ui'
 
 Vue.use(Select)
@@ -27,7 +28,7 @@ Vue.use(RadioGroup)
 Vue.use(Upload)
 Vue.use(Button)
 Vue.use(Dialog)
-
+Vue.use(Loading)
 import './assets/style/less/main.styl'
 import './assets/style/less/mkd.styl'
 import './assets/style/less/wiki.styl'
@@ -54,7 +55,7 @@ import './assets/style/less/wiki.styl'
         destoryed () {
             console.log('-----destoryed', this.model)
             // 移除挂载在window 中model对象
-            if (window !== undefined){
+            if (window.kdinvokes !== undefined){
                 delete window.kdinvokes[this.model.pageId]
             }
         }
