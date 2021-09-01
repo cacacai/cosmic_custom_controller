@@ -32,6 +32,7 @@ export default new  Vuex.Store({
         if (data && data.eventName){
             switch (data.eventName) {
                 case 'list':
+                case 'editOrder':
                     state.list= data.data
                     break
                 case 'addressList':
@@ -41,6 +42,9 @@ export default new  Vuex.Store({
                     state.nodeData = data.data
                     break
                 case 'updateById':
+                    break
+
+
 
             }
 

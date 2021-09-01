@@ -96,9 +96,11 @@ export default {
       const instance = axios.create({
         withCredentials: true
       })
-      const href = window.location.href
-      const domain = href.substring(0,href.indexOf('index.html'))
-      debugger
+      const origin = window.location.origin
+      let pathname =  window.location.pathname
+      const indexHtmlPos = pathname.indexOf('index.html')
+      pathname = indexHtmlPos > -1 ? pathname.substr(0,indexHtmlPos) : pathname
+      const domain = origin + pathname
       instance.post(domain + '/image/uploadImage.do', formdata).then((res) => {
         // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
         /**

@@ -16,7 +16,8 @@ import {
     Upload,
     Button,
     Dialog,
-    Loading
+    Loading,
+    MessageBox
 } from 'element-ui'
 
 Vue.use(Select)
@@ -29,6 +30,10 @@ Vue.use(Upload)
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Loading)
+Vue.use(MessageBox)
+Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$prompt = MessageBox.prompt
 import './assets/style/less/main.styl'
 import './assets/style/less/mkd.styl'
 import './assets/style/less/wiki.styl'

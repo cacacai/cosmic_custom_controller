@@ -402,7 +402,9 @@ export default {
         for (let k = 0; k < arrlist.childMenus.length; k++) {
           obj.nodelist.push(arrlist.childMenus[k].id)
         }
-        this.docMenuItemOrderPut(obj).then(res => {
+        this.docMenuItemOrderPut(obj)
+        this.treeLoading =true
+        /*then(res => {
           this.jsonloop = [{
             'id': null,
             'name': '全部',
@@ -421,7 +423,7 @@ export default {
         }).catch(res => {
           this.jsonloop[0].childMenus = this.curTree
           this.$store.dispatch('VerifiFailure', res)
-        })
+        })*/
         console.log('拖拽成功完成时触发的事件: ', dropNode.label, dropType)
       }).catch(() => {
         this.jsonloop[0].childMenus = this.curTree
