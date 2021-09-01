@@ -332,7 +332,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'openInfo',
       'itemList',
       'addressList',
       'nodeData',
@@ -382,10 +381,10 @@ export default {
     },
     handleDragStart (node, ev) {
       this.curTree = JSON.parse(JSON.stringify(this.jsonloop[0].childMenus))
-      console.log('节点开始拖拽时触发的事件', node)
+      // console.log('节点开始拖拽时触发的事件', node)
     },
     handleDragEnd (draggingNode, dropNode, dropType, ev) {
-      console.log('拖拽结束时（可能未成功）触发的事件: ', dropNode && dropNode.label, dropType)
+      // console.log('拖拽结束时（可能未成功）触发的事件: ', dropNode && dropNode.label, dropType)
     },
     handleDrop (draggingNode, dropNode, dropType, ev) {
       this.$confirm('此操作将移动节点位置, 是否继续?', '提示', {
@@ -433,7 +432,7 @@ export default {
           this.jsonloop[0].childMenus = this.curTree
           this.$store.dispatch('VerifiFailure', res)
         })*/
-        console.log('拖拽成功完成时触发的事件: ', dropNode.label, dropType)
+        // console.log('拖拽成功完成时触发的事件: ', dropNode.label, dropType)
       }).catch(() => {
         this.jsonloop[0].childMenus = this.curTree
       })
@@ -495,26 +494,21 @@ export default {
     },
     saveMd (value) {
       if (!this.checkloop.data.id) {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '请先保存节点再编写文档'
+        this.confirmMessage('请先保存节点再编写文档')
         return
       }
       if (!this.isEditDoc) {
         this.documentPost({ 'id': this.checkloop.data.id, 'content': value })
       } else {
         this.documentPut({ 'id': this.isEditDoc, 'content': value }).then(res => {
-          // console.log(res)
-          // this.lookMdFlag = false
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '保存成功'
-          // this.checkloop.data.docId = res.data.id
+          this.confirmMessage('保存成功')
         }).catch(res => {
           this.$store.dispatch('VerifiFailure', res)
         })
       }
     },
     add (data) {
-      console.log(data)
+      // console.log(data)
       // var getRandom = (new Date()).getTime()
       const newChild = { id: null, name: 'new node', childMenus: [], 'docId': null, parentId: data.id, 'type': 0, 'status': 0 }
       if (!data.childMenus) {
@@ -544,7 +538,7 @@ export default {
       this.checkloop.data = {}
     },
     handleNodeClick (data, node) {
-      console.log(data)
+      // console.log(data)
       this.reset()
       // this.checkloop.data = JSON.parse(JSON.stringify(data))
       this.checkloop.data = data
@@ -559,22 +553,19 @@ export default {
         if (data.docId && data.type === 0) {
           this.$emit('iframeCallback', [data])
         } else {
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '请选择有文档的节点'
+          this.confirmMessage('请选择有文档的节点')
         }
       }
     },
     treeedit () {
       if (this.checkloop.data.name === '') {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '节点名称不能为空'
+        this.confirmMessage('节点名称不能为空')
         return
       }
       var obj = null
       if (!this.checkloop.data.id) { // 新增节点
         if (JSON.stringify(this.checkloop.data) === '{}') {
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '请选中一个节点'
+          this.confirmMessage('请选中一个节点')
           return
         }
         obj = {
@@ -598,8 +589,7 @@ export default {
         // obj.navId = this.getNavId(this.checkloop.node)
         // obj.address = this.getAddress(this.checkloop.node)
         this.docMenuItemPut(obj).then(res => {
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '保存成功'
+          this.confirmMessage('保存成功')
         }).catch(res => {
           this.$store.dispatch('VerifiFailure', res)
         })
@@ -617,8 +607,7 @@ export default {
         'link': this.checkloop.data.link
       }
       this.docMenuItemPut(obj).then(res => {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '保存成功'
+        this.confirmMessage('保存成功')
         this.docListPoint = obj.address
         this.showchange2(obj.address)
       }).catch(res => {
@@ -653,8 +642,7 @@ export default {
       // 当已经入库的节点删除时
       var obj = this.checkloop.data
       this.docMenuItemPatch(obj).then(res => {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '修改状态成功'
+        this.confirmMessage('修改状态成功')
 
         const treeList = this.nodeSearch(this.jsonloop, obj.id)
         this.nodeListChange(treeList, obj.status)
@@ -696,8 +684,7 @@ export default {
           'status': 0,
           'childMenus': res.data
         }]
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '位置修改成功'
+        this.confirmMessage('位置修改成功')
         this.editNode = {
           id: '',
           parentId: ''
@@ -719,15 +706,13 @@ export default {
         this.docMenuItemAvatar({ 'id': this.checkloop.data.id, 'avatar': result.data.id }).then(res => {
           this.checkloop.data.avatar = res.data.avatar
           this.docAvatar = window.location.protocol + '//' + window.location.host + '/kd/ecos/file/getById/' + res.data.avatar
-          console.log(res)
+          // console.log(res)
         }).catch(res => {
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '图标上传失败啦'
+          this.confirmMessage('图标上传失败啦')
           this.$store.dispatch('VerifiFailure', res)
         })
       } else {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '上传失败'
+        this.confirmMessage('上传失败')
       }
     },
     beforeAvatarUpload (file) {
@@ -735,19 +720,17 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '上传图标只能是 JPG/PNG 格式！'
+        this.confirmMessage('上传图标只能是 JPG/PNG 格式！')
       }
       if (!isLt2M) {
-        this.openInfo.huidiao = true
-        this.openInfo.huidiaoInfo = '上传图标大小不能超过 2MB！'
+        this.confirmMessage('上传图标大小不能超过 2MB！')
       }
       return isJPG && isLt2M
     },
     iframeCallback (arr) {
       if (arr.length) {
         let row = arr[arr.length - 1]
-        console.log(row)
+        // console.log(row)
         this.addPersonObj = row
         this.$forceUpdate()
       }
@@ -755,8 +738,7 @@ export default {
     adddialogclick () {
       if (this.addPersonObj) {
         if (this.addPersonObj.id === this.checkloop.data.id) {
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '不能将 ' + this.addPersonObj.name + ' 设置为内链，原因：自身不能成为自身的内链'
+          this.confirmMessage('不能将 ' + this.addPersonObj.name + ' 设置为内链，原因：自身不能成为自身的内链')
           return
         }
         this.$confirm('确定将 ' + this.addPersonObj.name + ' 添加为 ' + this.checkloop.data.name + ' 的内链吗？确定后点击保存按钮提交', '提示', {
@@ -814,6 +796,11 @@ export default {
         this.docListPoint = val[0].label
         this.showChange(val[0].value)
       }
+    },
+    confirmMessage (message) {
+      this.$confirm(message, '提示', {
+        confirmButtonText: '确定',
+      })
     }
   },
   watch: {
@@ -831,12 +818,10 @@ export default {
       this.checkloop.data.address = val.address
       this.checkloop.data.showAll = val.showAll
       this.checkloop.data.type = val.type
-      this.openInfo.huidiao = true
-      this.openInfo.huidiaoInfo = '新增成功'
+      this.confirmMessage('新增成功')
     },
     newDocId (val) {
-      this.openInfo.huidiao = true
-      this.openInfo.huidiaoInfo = '保存成功'
+      this.confirmMessage('保存成功')
       this.checkloop.data.docId = val
     },
     docContent (val) {

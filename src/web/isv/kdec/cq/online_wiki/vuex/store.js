@@ -7,21 +7,6 @@ export default new  Vuex.Store({
       pageId: null,
       invoke: null,
       fileServer: null,
-      openInfo: {
-      loginFlag: false,
-      videoUrl: null,
-      videoImg: null,
-      playerFlag: false,
-      lookMdContent: '',
-      huidiao: false,
-      huidiaoInfo: '',
-      huidiao2: false,
-      huidiaoInfo2: '',
-      huidiao3: false,
-      huidiaoInfo3: '',
-      huidiao4: false,
-      huidiaoInfo4: ''
-    },
       list: [],
       addressList: [],
       nodeData: null,
@@ -50,20 +35,13 @@ export default new  Vuex.Store({
                 case 'getDocument':
                     state.docContent = data.data
                     break
-
                 // 前后端同时修改数据，没有回调数据更新。
                 case 'updateById':
                 case 'updateStatus':
                     break
-
-
-
-
-
             }
 
         }
-        // TODO  接收后台数据接口
       //console.log('change Data, ', props)
       //state.ganttData = Object.assign([], props.data)
     },
@@ -74,9 +52,6 @@ export default new  Vuex.Store({
     }
   },
   getters: {
-    openInfo: (state) => {
-        return state.openInfo
-    },
       fileServer: state => state.fileServer,
       itemList: (state) => {
         return state.list

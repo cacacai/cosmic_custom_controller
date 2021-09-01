@@ -30,7 +30,6 @@ Vue.use(Upload)
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Loading)
-Vue.use(MessageBox)
 Vue.prototype.$confirm = MessageBox.confirm
 import './assets/style/less/main.styl'
 import './assets/style/less/mkd.styl'
@@ -48,15 +47,15 @@ import './assets/style/less/wiki.styl'
             this.model = model
         },
         init (props) {
-            console.log('-----init', this.model.style, props)
+            // console.log('-----init', this.model.style, props)
             setHtml(this.model, props)
         },
         update (props) {
-            console.log('-----update', this.model, props)
+            // console.log('-----update', this.model, props)
             setData(props)
         },
         destoryed () {
-            console.log('-----destoryed', this.model)
+            // console.log('-----destoryed', this.model)
             // 移除挂载在window 中model对象
             if (window.kdinvokes !== undefined){
                 delete window.kdinvokes[this.model.pageId]
