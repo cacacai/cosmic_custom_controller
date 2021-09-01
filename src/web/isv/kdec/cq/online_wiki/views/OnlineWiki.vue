@@ -182,6 +182,7 @@
                               @change="treeedit">
                 <el-radio-button :label="0">内链</el-radio-button>
                 <el-radio-button :label="1">外链</el-radio-button>
+                <el-radio-button :label="2">PDF</el-radio-button>
               </el-radio-group>
             </div>
 
@@ -200,7 +201,25 @@
             <div v-show="checkloop.data.id && checkloop.data.type === 1">外链地址：<el-input type="text"
                                                                                         v-model="checkloop.data.link"></el-input>
             </div>
-
+          
+            <div v-show="checkloop.data.id && checkloop.data.type === 2">
+         
+               <el-upload
+                  class="upload-demo"
+                  drag
+                  :limit="1"
+                  :on-exceed="handleExceed"
+                  :auto-upload="true"
+                  :action="UploadCosmicUrl()"
+                  :on-success="uploadsuccess"
+                  accept=".pdf"
+                  multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
+               </div>
+               
             <el-button type="button"
                        class="lookmark noback"
                        @click="editMd(checkloop.data.docId)"
@@ -297,6 +316,7 @@ export default {
       dialogTable: false,
       isEditDoc: null,
       docAvatar: null,
+      fileurl:null,
       checkloop: {
         'node': {},
         'data': {}
@@ -337,7 +357,8 @@ export default {
       'addressList',
       'nodeData',
       'newDocId',
-      'docContent'
+      'docContent',
+      'fileServer'
     ])
   },
   methods: {
@@ -571,6 +592,7 @@ export default {
         return
       }
       var obj = null
+      
       if (!this.checkloop.data.id) { // 新增节点
         if (JSON.stringify(this.checkloop.data) === '{}') {
           this.openInfo.huidiao = true
@@ -593,11 +615,13 @@ export default {
           'redirect': this.checkloop.data.redirect,
           'address': this.checkloop.data.address,
           'type': this.checkloop.data.type,
-          'link': this.checkloop.data.link
+          'link': this.checkloop.data.link,
+          'fileurl': this.checkloop.data.fileurl
         }
         // obj.navId = this.getNavId(this.checkloop.node)
         // obj.address = this.getAddress(this.checkloop.node)
         this.docMenuItemPut(obj).then(res => {
+          
           this.openInfo.huidiao = true
           this.openInfo.huidiaoInfo = '保存成功'
         }).catch(res => {
@@ -714,6 +738,20 @@ export default {
     UploadUrl () { // 返回上传的地址
       return window.location.protocol + '//' + window.location.host + '/kd/ecos/file/node/upload'
     },
+      UploadCosmicUrl () { // 返回上传的地址
+       const origin = window.location.origin
+      let pathname =  window.location.pathname
+      const indexHtmlPos = pathname.indexOf('index.html')
+      pathname = indexHtmlPos > -1 ? pathname.substr(0,indexHtmlPos) : pathname
+      const domain = origin + pathname
+      let url= domain + '/attachment/upload.do'
+
+      return url
+    },
+    uploadsuccess(response,file,fileList){
+        this.checkloop.data.fileurl=this.fileServer+response.url;
+
+    },
     handleAvatarSuccess (result, file) {
       if (result.success) {
         this.docMenuItemAvatar({ 'id': this.checkloop.data.id, 'avatar': result.data.id }).then(res => {
@@ -814,7 +852,16 @@ export default {
         this.docListPoint = val[0].label
         this.showChange(val[0].value)
       }
-    }
+    },
+     handleExceed(files, fileList) {
+          this.$confirm('只能上传一个文件', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          closeOnClickModal: false,
+          customClass: 'appbtnroval'
+        })
+      }
   },
   watch: {
     filterText (val) {
