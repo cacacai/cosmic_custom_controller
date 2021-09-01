@@ -333,7 +333,8 @@ export default {
     ...mapGetters([
       'openInfo',
       'itemList',
-      'addressList'
+      'addressList',
+      'nodeData'
     ])
   },
   methods: {
@@ -591,16 +592,7 @@ export default {
         }
         // obj.navId = this.getNavId(this.checkloop.node)
         // obj.address = this.getAddress(this.checkloop.node)
-        this.docMenuItemAdd(obj).then(res => {
-          this.checkloop.data.id = res.data.id
-          this.checkloop.data.address = res.data.address
-          this.checkloop.data.showAll = res.data.showAll
-          this.checkloop.data.type = res.data.type
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '新增成功'
-        }).catch(res => {
-          this.$store.dispatch('VerifiFailure', res)
-        })
+        this.docMenuItemAdd(obj)
       } else { // 修改节点
         obj = {
           'id': this.checkloop.data.id,
@@ -835,6 +827,14 @@ export default {
         this.docListPoint = val[0].label
         this.showChange(val[0].value)
       }
+    },
+    nodeData (val) {
+      this.checkloop.data.id = val.id
+      this.checkloop.data.address = val.address
+      this.checkloop.data.showAll = val.showAll
+      this.checkloop.data.type = val.type
+      this.openInfo.huidiao = true
+      this.openInfo.huidiaoInfo = '新增成功'
     }
   }
 }

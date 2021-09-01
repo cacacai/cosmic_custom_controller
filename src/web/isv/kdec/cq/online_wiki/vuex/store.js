@@ -6,7 +6,8 @@ export default new  Vuex.Store({
   state: {
       pageId: null,
       invoke: null,
-    openInfo: {
+      fileServer: null,
+      openInfo: {
       loginFlag: false,
       videoUrl: null,
       videoImg: null,
@@ -22,7 +23,8 @@ export default new  Vuex.Store({
       huidiaoInfo4: ''
     },
       list: null,
-      addressList: null
+      addressList: null,
+      nodeData: null
   },
   mutations: {
     UPDATE_ALL_DATA (state, props) {
@@ -34,6 +36,12 @@ export default new  Vuex.Store({
                     break
                 case 'addressList':
                     state.addressList = data.data
+                    break
+                case 'addNode':
+                    state.nodeData = data.data
+                    break
+                case 'updateById':
+
             }
 
         }
@@ -44,17 +52,22 @@ export default new  Vuex.Store({
     INIT_DATA (state, pageId) {
         state.pageId = pageId
         state.invoke = window.kdinvokes[pageId].invoke
+        state.fileServer = window.kdinvokes[pageId].fileServer
     }
   },
   getters: {
     openInfo: (state) => {
         return state.openInfo
     },
+      fileServer: state => state.fileServer,
       itemList: (state) => {
         return state.list
       },
       addressList: (state) => {
         return state.addressList
+      },
+      nodeData: (state) => {
+          return state.nodeData
       },
   },
   actions: {
