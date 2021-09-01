@@ -22,10 +22,11 @@ export default new  Vuex.Store({
       huidiao4: false,
       huidiaoInfo4: ''
     },
-      list: null,
-      addressList: null,
+      list: [],
+      addressList: [],
       nodeData: null,
-      docId: null
+      docId: null,
+      docContent: null
   },
   mutations: {
     UPDATE_ALL_DATA (state, props) {
@@ -43,7 +44,13 @@ export default new  Vuex.Store({
                     state.nodeData = data.data
                     break
                 case 'addDocument':
-                    state.docId = data.data.docId
+                case 'updateDocument':
+                    state.docId = data.data.id
+                    break
+                case 'getDocument':
+                    state.docContent = data.data
+                    break
+
                 // 前后端同时修改数据，没有回调数据更新。
                 case 'updateById':
                 case 'updateStatus':
@@ -80,7 +87,8 @@ export default new  Vuex.Store({
       nodeData: (state) => {
           return state.nodeData
       },
-      newDocId: state => state.docId
+      newDocId: state => state.docId,
+      docContent: state => state.docContent
   },
   actions: {
       addressListGet:({ // 获取所有文档列表

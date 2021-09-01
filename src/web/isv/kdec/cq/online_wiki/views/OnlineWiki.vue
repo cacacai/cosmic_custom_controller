@@ -27,9 +27,9 @@
           </el-input>
         </div>
 
-        <div class="devappro maneditbtn"
+<!--        <div class="devappro maneditbtn"
              v-if="!iframeClick"
-             @click="editdialog = !editdialog">移动</div>
+             @click="editdialog = !editdialog">移动</div>-->
 
 <!--        <div class="devappro"
              v-show="docListPoint !== 'greenStart' && docListPoint !== 'manage' ">
@@ -219,7 +219,8 @@
               </el-button>
             </div>
 
-            <div v-show="editdialog"
+<!--         移除模块之间移动的功能
+             <div v-show="editdialog"
                  class="nodedial">
               <div class="titcur">
                 <span>节点移动位置</span>
@@ -238,7 +239,7 @@
                      @click="editcomfirm"><a href="javascript:void(0)">保存</a></div>
 
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -262,8 +263,8 @@
                custom-class="FixedHeightDialog"
                width="1200px">
       <div style="position: relative">
-        <tree-manage @iframeCallback="iframeCallback"
-                     :iframeClick="iframeOpen"></tree-manage>
+        <online-wiki @iframeCallback="iframeCallback"
+                     :iframeClick="iframeOpen"></online-wiki>
       </div>
       <span slot="footer"
             class="dialog-footer">
@@ -335,7 +336,8 @@ export default {
       'itemList',
       'addressList',
       'nodeData',
-      'newDocId'
+      'newDocId',
+      'docContent'
     ])
   },
   methods: {
@@ -354,7 +356,13 @@ export default {
       'docMenuItemAvatar'
     ]),
     init () {
-      this.addressListGet({})
+      //如果数据为空才需要重新初始化
+      if (this.addressList.length >0  && this.itemList.length>0){
+        this.initAddress(this.addressList)
+        this.initList(this.itemList)
+      }else{
+        this.addressListGet({})
+      }
       //this.docListPoint = 'develop'
       // this.showChange(this.docListPoint)
     },
@@ -479,18 +487,7 @@ export default {
     editMd (docId) {
       this.lookMdFlag = true
       if (docId) {
-        this.documentGet({ 'id': docId }).then(res => {
-          if (res.data) {
-            this.isEditDoc = res.data.id
-            this.mdConfig.content = res.data.content
-          } else {
-            this.isEditDoc = null
-            this.mdConfig.content = ''
-          }
-        }).catch(res => {
-          this.isEditDoc = null
-          this.$store.dispatch('VerifiFailure', res)
-        })
+        this.documentGet({ 'id': docId })
       } else {
         this.isEditDoc = null
         this.mdConfig.content = ''
@@ -510,7 +507,7 @@ export default {
           // this.lookMdFlag = false
           this.openInfo.huidiao = true
           this.openInfo.huidiaoInfo = '保存成功'
-          this.checkloop.data.docId = res.data.id
+          // this.checkloop.data.docId = res.data.id
         }).catch(res => {
           this.$store.dispatch('VerifiFailure', res)
         })
@@ -787,13 +784,8 @@ export default {
       }).then(() => {
         this.checkloop.data.redirect = ''
       }).catch(() => { })
-    }
-  },
-  watch: {
-    filterText (val) {
-      this.$refs.tree2.filter(val)
     },
-    itemList (val) {
+    initList (val) {
       this.jsonloop = [{
         'id': null,
         'root': true,
@@ -816,12 +808,23 @@ export default {
       })
       this.treeLoading = false //结束加载数据
     },
-    addressList (val) {
+    initAddress (val) {
       this.options = val
       if (val[0]){
         this.docListPoint = val[0].label
         this.showChange(val[0].value)
       }
+    }
+  },
+  watch: {
+    filterText (val) {
+      this.$refs.tree2.filter(val)
+    },
+    itemList (val) {
+      this.initList(val)
+    },
+    addressList (val) {
+      this.initAddress(val)
     },
     nodeData (val) {
       this.checkloop.data.id = val.id
@@ -835,6 +838,15 @@ export default {
       this.openInfo.huidiao = true
       this.openInfo.huidiaoInfo = '保存成功'
       this.checkloop.data.docId = val
+    },
+    docContent (val) {
+      if (val) {
+        this.isEditDoc = val.id
+        this.mdConfig.content = val.content
+      } else {
+        this.isEditDoc = null
+        this.mdConfig.content = ''
+      }
     }
   }
 }
