@@ -334,7 +334,8 @@ export default {
       'openInfo',
       'itemList',
       'addressList',
-      'nodeData'
+      'nodeData',
+      'newDocId'
     ])
   },
   methods: {
@@ -502,15 +503,7 @@ export default {
         return
       }
       if (!this.isEditDoc) {
-        this.documentPost({ 'id': this.checkloop.data.id, 'content': value }).then(res => {
-          // console.log(res)
-          // this.lookMdFlag = false
-          this.openInfo.huidiao = true
-          this.openInfo.huidiaoInfo = '保存成功'
-          this.checkloop.data.docId = res.data.id
-        }).catch(res => {
-          this.$store.dispatch('VerifiFailure', res)
-        })
+        this.documentPost({ 'id': this.checkloop.data.id, 'content': value })
       } else {
         this.documentPut({ 'id': this.isEditDoc, 'content': value }).then(res => {
           // console.log(res)
@@ -837,6 +830,11 @@ export default {
       this.checkloop.data.type = val.type
       this.openInfo.huidiao = true
       this.openInfo.huidiaoInfo = '新增成功'
+    },
+    newDocId (val) {
+      this.openInfo.huidiao = true
+      this.openInfo.huidiaoInfo = '保存成功'
+      this.checkloop.data.docId = val
     }
   }
 }

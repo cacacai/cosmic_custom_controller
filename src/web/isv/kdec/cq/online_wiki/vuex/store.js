@@ -24,7 +24,8 @@ export default new  Vuex.Store({
     },
       list: null,
       addressList: null,
-      nodeData: null
+      nodeData: null,
+      docId: null
   },
   mutations: {
     UPDATE_ALL_DATA (state, props) {
@@ -41,8 +42,14 @@ export default new  Vuex.Store({
                 case 'addNode':
                     state.nodeData = data.data
                     break
+                case 'addDocument':
+                    state.docId = data.data.docId
+                // 前后端同时修改数据，没有回调数据更新。
                 case 'updateById':
+                case 'updateStatus':
                     break
+
+
 
 
 
@@ -73,6 +80,7 @@ export default new  Vuex.Store({
       nodeData: (state) => {
           return state.nodeData
       },
+      newDocId: state => state.docId
   },
   actions: {
       addressListGet:({ // 获取所有文档列表
@@ -105,7 +113,7 @@ export default new  Vuex.Store({
                        }, obj) => {
         return rootState.invoke('updateStatus', obj)
     },
-    docMenuItemDelete: ({ // json树 删除树
+    docMenuItemDelete: ({ // json树 删除树 暂时没有对应的处理事件，通过修改状态处理
                           rootState
                         }, obj) => {
         return rootState.invoke('deleteById', obj)
