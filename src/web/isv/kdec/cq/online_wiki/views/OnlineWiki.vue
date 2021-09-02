@@ -201,6 +201,7 @@
             <div v-show="checkloop.data.id && checkloop.data.type === 1">外链地址：<el-input type="text"
                                                                                         v-model="checkloop.data.link"></el-input>
             </div>
+            
           
             <div v-show="checkloop.data.id && checkloop.data.type === 2">
          
@@ -212,11 +213,12 @@
                   :auto-upload="true"
                   :action="UploadCosmicUrl()"
                   :on-success="uploadsuccess"
+                  :file-list="fileList"
                   accept=".pdf"
                   multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                  <div class="el-upload__tip" slot="tip">只能上传PDF文件,且只能上传一份文件</div>
                 </el-upload>
                </div>
                
@@ -317,6 +319,7 @@ export default {
       isEditDoc: null,
       docAvatar: null,
       fileurl:null,
+      fileList:[],
       checkloop: {
         'node': {},
         'data': {}
@@ -558,6 +561,7 @@ export default {
     },
     reset () {
       this.checkloop.data = {}
+      this.fileList=[]
     },
     handleNodeClick (data, node) {
       // console.log(data)
@@ -565,6 +569,10 @@ export default {
       // this.checkloop.data = JSON.parse(JSON.stringify(data))
       this.checkloop.data = data
       this.checkloop.node = node
+      if(this.checkloop.data.filename!=null&&this.checkloop.data.filename!=""){
+        this.fileList.push({name: this.checkloop.data.filename, url: this.checkloop.data.fileurl}) 
+      }
+    
       if (this.checkloop.data.avatar) {
         this.docAvatar = window.location.protocol + '//' + window.location.host + '/kd/ecos/file/getById/' + this.checkloop.data.avatar
       } else {
@@ -607,7 +615,8 @@ export default {
           'address': this.checkloop.data.address,
           'type': this.checkloop.data.type,
           'link': this.checkloop.data.link,
-          'fileurl': this.checkloop.data.fileurl
+          'fileurl': this.checkloop.data.fileurl,
+          'filename': this.checkloop.data.filename
         }
         // obj.navId = this.getNavId(this.checkloop.node)
         // obj.address = this.getAddress(this.checkloop.node)
@@ -735,9 +744,17 @@ export default {
 
       return url
     },
+    confirmMessage (message) {
+      this.$confirm(message, '提示', {
+        confirmButtonText: '确定',
+      })
+    },
     uploadsuccess(response,file,fileList){
+      debugger
         this.checkloop.data.fileurl=this.fileServer+response.url;
-
+        this.checkloop.data.filename=file.name
+        this.treeedit()
+      //  this.confirmMessage('上传成功')
     },
     handleAvatarSuccess (result, file) {
       if (result.success) {
