@@ -30,7 +30,6 @@ Vue.use(Upload)
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Loading)
-Vue.use(MessageBox)
 Vue.prototype.$confirm = MessageBox.confirm
 import './assets/style/less/main.styl'
 import './assets/style/less/mkd.styl'
