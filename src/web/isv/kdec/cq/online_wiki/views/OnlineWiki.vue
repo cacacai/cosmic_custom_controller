@@ -4,6 +4,7 @@
       <div class="leftchange">
         <span>文档管理</span>
         <el-select v-model="docListPoint"
+                   :disabled="treeLoading"
                    @change="showChange"
                    placeholder="请选择需要显示的文档类型">
           <el-option v-for="item in options"
@@ -201,10 +202,10 @@
             <div v-show="checkloop.data.id && checkloop.data.type === 1">外链地址：<el-input type="text"
                                                                                         v-model="checkloop.data.link"></el-input>
             </div>
-            
-          
+
+
             <div v-show="checkloop.data.id && checkloop.data.type === 2">
-         
+
                <el-upload
                   class="upload-demo"
                   drag
@@ -221,7 +222,7 @@
                   <div class="el-upload__tip" slot="tip">只能上传PDF文件,且只能上传一份文件</div>
                 </el-upload>
                </div>
-               
+
             <el-button type="button"
                        class="lookmark noback"
                        @click="editMd(checkloop.data.docId)"
@@ -350,7 +351,6 @@ export default {
   },
   props: ['iframeClick'],
   mounted () {
-    this.treeLoading = true
     this.init()
   },
   computed: {
@@ -381,7 +381,7 @@ export default {
     ]),
     init () {
       //如果数据为空才需要重新初始化
-      if (this.addressList.length >0  && this.itemList.length>0){
+      if (this.iframeClick && this.addressList.length >0  && this.itemList.length>0){
         this.initAddress(this.addressList)
         this.initList(this.itemList)
       }else{
@@ -391,6 +391,7 @@ export default {
       // this.showChange(this.docListPoint)
     },
     showChange (type) {
+      this.treeLoading = true
       this.reset()
       this.docMenuItemAdminGet({
         "address":type
@@ -535,7 +536,7 @@ export default {
     add (data) {
       // console.log(data)
       // var getRandom = (new Date()).getTime()
-      const newChild = { id: null, name: 'new node', childMenus: [], 'docId': null, parentId: data.id, 'type': 0, 'status': 0 }
+      const newChild = { id: '', name: 'new node', childMenus: [], 'docId': null, parentId: data.id, 'type': 0, 'status': 0 }
       if (!data.childMenus) {
         this.$set(data, 'childMenus', [])
       }
@@ -570,9 +571,9 @@ export default {
       this.checkloop.data = data
       this.checkloop.node = node
       if(this.checkloop.data.filename!=null&&this.checkloop.data.filename!=""){
-        this.fileList.push({name: this.checkloop.data.filename, url: this.checkloop.data.fileurl}) 
+        this.fileList.push({name: this.checkloop.data.filename, url: this.checkloop.data.fileurl})
       }
-    
+
       if (this.checkloop.data.avatar) {
         this.docAvatar = window.location.protocol + '//' + window.location.host + '/kd/ecos/file/getById/' + this.checkloop.data.avatar
       } else {
@@ -592,7 +593,7 @@ export default {
         this.confirmMessage('节点名称不能为空')
         return
       }
-      var obj = null     
+      let obj = null
       if (!this.checkloop.data.id) { // 新增节点
         if (JSON.stringify(this.checkloop.data) === '{}') {
           this.confirmMessage('请选中一个节点')
@@ -621,7 +622,7 @@ export default {
         // obj.navId = this.getNavId(this.checkloop.node)
         // obj.address = this.getAddress(this.checkloop.node)
         this.docMenuItemPut(obj).then(res => {
-          
+
           this.confirmMessage('保存成功')
         }).catch(res => {
           this.$store.dispatch('VerifiFailure', res)
@@ -704,14 +705,14 @@ export default {
       }
       this.editAddress(obj).then(res => {
         this.jsonloop = [{
-          'id': null,
+          'id': '',
           'name': '全部',
           'docId': null,
           'status': 0,
           'childMenus': res.data
         }]
         this.alljsonloop = [{
-          'id': null,
+          'id': '',
           'name': '全部',
           'docId': null,
           'status': 0,
@@ -824,7 +825,7 @@ export default {
     },
     initList (val) {
       this.jsonloop = [{
-        'id': null,
+        'id': '',
         'root': true,
         'name': '全部',
         'docId': null,
@@ -832,7 +833,7 @@ export default {
         'childMenus': val
       }]
       this.alljsonloop = [{
-        'id': null,
+        'id': '',
         'root': true,
         'name': '全部',
         'docId': null,
