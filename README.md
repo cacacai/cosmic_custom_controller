@@ -29,7 +29,7 @@
 此功能优化开发过程中出现频繁打zip包的过程
 
 ## 前端测试
-在请求url的末尾加上 kdcus_cdn=http://localhost:3001
+在请求url的末尾加上 kdcus_cdn=http://172.20.110.107:3001
 
 
 ## KDE脚本插件测试
