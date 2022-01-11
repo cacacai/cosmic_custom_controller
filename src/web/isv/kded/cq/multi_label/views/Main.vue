@@ -42,7 +42,7 @@ Vue.use(Tag)
 // 简单封装一个公用组件
 import MyTag from "./MyTag.vue";
 import {Tag,Message} from "element-ui";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 Array.prototype.deleteIndex = function(index){
   return this.slice(0, index).concat(this.slice(parseInt(index, 10) + 1));
 }
@@ -59,80 +59,26 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'openInfo',
-      'fileServer'
-    ])
+      'tagList'// 苍穹更新到从vuex中的标签列表数据
+    ]),
   },
   mounted() {
-    this.categories = [{
-      name: '品牌',
-      count: 0,
-      children: [{
-        name: '联想',
-      }, {
-        name: '小米',
-      }, {
-        name: '苹果',
-      }, {
-        name: '东芝',
-      }]
-    }, {
-      name: 'CPU',
-      count: 0,
-      children: [{
-        name: 'intel i7 8700K',
-      }, {
-        name: 'intel i7 7700K',
-      }, {
-        name: 'intel i9 9270K',
-      }, {
-        name: 'intel i7 8700',
-      }, {
-        name: 'AMD 1600X',
-      }]
-    }, {
-      name: '内存',
-      count: 0,
-      children: [{
-        name: '七彩虹8G',
-      }, {
-        name: '七彩虹16G',
-      }, {
-        name: '金士顿8G',
-      }, {
-        name: '金士顿16G',
-      }]
-    }, {
-      name: '显卡',
-      count: 0,
-      children: [{
-        name: 'NVIDIA 1060 8G',
-      }, {
-        name: 'NVIDIA 1080Ti 16G',
-      }, {
-        name: 'NVIDIA 1080 8G',
-      }, {
-        name: 'NVIDIA 1060Ti 16G',
-      }]
-    }]
+    this.categories = this.tagList
   },
   watch: {
+    //监听后台的标签列表数据更新
+    itemList(val) {
+      this.categories = val
+    },
     // 监听条件变化，按照请求接口拼装请求参数
     conditions(val){
-      let selectedCondition = {};
-      for(let categories of this.categories){
-        let selected_list = [];
-        for(let child of categories.children){
-          if(child.active){
-            selected_list.push(child.name);
-          }
-        }
-        selectedCondition[categories.name] = selected_list.join("|")
-      }
-      console.log(selectedCondition);
+      this.sendSelectTags(val)
     }
   },
   methods: {
+    ...mapActions([
+      'sendSelectTags'// 向后台发送数据请求
+    ]),
     // 处理标签点击事件，未选中则选中，已选中则取消选中
     clickChild(category, categoryIndex, child, childIndex) {
       if (this.conditions.length >= 3 && (child.active === false || child.active === undefined)){
